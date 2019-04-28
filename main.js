@@ -1,10 +1,12 @@
 //add background color to list items
+
 function setItemListBackground() {
     var items = document.getElementsByClassName("list-group-item");
+    var num = document.getElementById("number");
     for (let i = 0; i < items.length; ++i) {
         items[i].style.backgroundColor = "yellow";
     }
-
+    num.textContent = items.length.toString();
 }
 
 setItemListBackground();
@@ -32,16 +34,20 @@ function addItem(evt) {
     var newItem = document.getElementById("item").value;
     var li = document.createElement("li");
     li.className = "list-group-item";
-    li.appendChild(document.createTextNode(newItem));
+    if (newItem) {
+        li.appendChild(document.createTextNode(newItem));
 
-    var button = document.createElement("button");
-    button.setAttribute("class", "btn btn-danger btn-sm float-right delete");
+        var button = document.createElement("button");
+        button.setAttribute("class", "btn btn-danger btn-sm float-right delete");
 
-    button.appendChild(document.createTextNode("X"));
-    li.appendChild(button);
+        button.appendChild(document.createTextNode("X"));
+        li.appendChild(button);
 
-    itemList.appendChild(li);
-    setItemListBackground();
+        itemList.appendChild(li);
+        setItemListBackground();
+    }
+
+
 }
 
 //remove items from item list
@@ -54,6 +60,7 @@ function removeItem(evt) {
             itemList.removeChild(li);
         }
     }
+    setItemListBackground();
 }
 
 var filter = document.getElementById("filter");
