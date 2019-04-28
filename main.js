@@ -1,49 +1,75 @@
-var items = document.getElementsByClassName("list-group-item");
-items[0].style.backgroundColor = "red";
-items[1].style.backgroundColor = "yellow";
-items[2].style.backgroundColor = "green";
-items[3].style.backgroundColor = "aqua";
+//add background color to list items
+function setItemListBackground() {
+    var items = document.getElementsByClassName("list-group-item");
+    for (let i = 0; i < items.length; ++i) {
+        items[i].style.backgroundColor = "yellow";
+    }
+
+}
+
+setItemListBackground();
+
+
+//==============================================
+//add background color to form
 
 var itemList = document.querySelector("#items");
 itemList.parentNode.style.backgroundColor = "grey";
 var newDiv = document.createElement("div");
 
-newDiv.className = "hello";
-newDiv.id = "hello-world";
-newDiv.setAttribute("title", "hello Div");
-newDiv.setAttribute("name", "newDiv");
-
-var newDivText = document.createTextNode("Inserted From JavaScript");
-
-newDiv.appendChild(newDivText);
-
-let container = document.querySelector("header .container");
-var h1 = document.querySelector("header h1");
-
-
-container.insertBefore(newDiv, h1);
-
-var button = document.getElementById('button').addEventListener("mousemove", buttonClick);
-
-function buttonClick(e) {
-    document.body.style.backgroundColor = "rgb(" + e.offsetX + "," + e.offsetY + ",10)";
-}
-
 //--===============================================================--
+//add events
 var form = document.getElementById("addForm");
 var itemList = document.getElementById("items");
 
+
+//adding items to item list
 form.addEventListener("submit", addItem);
 
 function addItem(evt) {
     evt.preventDefault();
 
     var newItem = document.getElementById("item").value;
-
     var li = document.createElement("li");
-
     li.className = "list-group-item";
-
     li.appendChild(document.createTextNode(newItem));
+
+    var button = document.createElement("button");
+    button.setAttribute("class", "btn btn-danger btn-sm float-right delete");
+
+    button.appendChild(document.createTextNode("X"));
+    li.appendChild(button);
+
     itemList.appendChild(li);
+    setItemListBackground();
+}
+
+//remove items from item list
+itemList.addEventListener("click", removeItem);
+
+function removeItem(evt) {
+    if (evt.target.classList.contains("delete")) {
+        if (confirm("Are you sure?")) {
+            var li = evt.target.parentElement;
+            itemList.removeChild(li);
+        }
+    }
+}
+
+var filter = document.getElementById("filter");
+
+filter.addEventListener("keyup", filterItems);
+
+function filterItems(evt) {
+    var text = evt.target.value.toLowerCase();
+    var itemss = itemList.getElementsByTagName("li");
+
+    Array.from(itemss).forEach(function(item) {
+        var itemName = item.firstChild.textContent;
+        if (itemName.toLowerCase().indexOf(text) != -1) {
+            item.style.display = "block";
+        } else {
+            item.style.display = "none";
+        }
+    });
 }
