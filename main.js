@@ -29,7 +29,8 @@ function buttonClick(e) {
     document.body.style.backgroundColor = "rgb(" + e.offsetX + "," + e.offsetY + ",10)";
 }
 
-var form = document.getElementById("addform");
+//--===============================================================--
+var form = document.getElementById("addForm");
 var itemList = document.getElementById("items");
 
 form.addEventListener("submit", addItem);
